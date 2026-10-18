@@ -4,18 +4,30 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class HelloWorldResponse {
 
-    @JsonProperty("text")
-    String text;
+    @JsonProperty("id")
+    Long id;
 
-    public String getText() {
-        return text;
+    @JsonProperty("content")
+    String content;
+
+    public HelloWorldResponse(Long id, String content) {
+        this.id = id;
+        this.content = content;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public Long getId() {
+        return id;
     }
 
-    public HelloWorldResponse(String text) {
-        this.text = text;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }
