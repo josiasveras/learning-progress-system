@@ -1,7 +1,7 @@
-package com.app.lps.controller;
+package com.app.lps.controllers;
 
 import com.app.lps.records.HelloWorldResponse;
-import com.app.lps.service.HelloWorldService;
+import com.app.lps.services.HelloWorldService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

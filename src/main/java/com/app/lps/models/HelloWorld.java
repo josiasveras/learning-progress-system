@@ -1,4 +1,4 @@
-package com.app.lps.model;
+package com.app.lps.models;
 
 import jakarta.persistence.*;
 

@@ -1,6 +1,6 @@
-package com.app.lps.repository;
+package com.app.lps.repositories;
 
-import com.app.lps.model.HelloWorld;
+import com.app.lps.models.HelloWorld;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
