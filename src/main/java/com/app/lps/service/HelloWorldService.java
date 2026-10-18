@@ -1,9 +1,8 @@
 package com.app.lps.service;
 
-import com.app.lps.dto.HelloWorldResponse;
 import com.app.lps.model.HelloWorld;
+import com.app.lps.records.HelloWorldResponse;
 import com.app.lps.repository.HelloWorldRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,8 +16,8 @@ public class HelloWorldService {
         this.helloWorldRepository = helloWorldRepository;
     }
 
-    public HelloWorld getHelloWorldById(Long id) {
-        Optional<HelloWorld> helloWorldResponse = helloWorldRepository.findById(id);
-      return helloWorldResponse.orElse(null);
+    public HelloWorldResponse getHelloWorldById(Long id) {
+        Optional<HelloWorld> helloWorldOptional = helloWorldRepository.findById(id);
+        return helloWorldOptional.map(helloWorld -> new HelloWorldResponse(helloWorld.getContent())).orElse(null);
     }
 }
