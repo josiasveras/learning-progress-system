@@ -1,16 +1,24 @@
-package com.app.lps.dto;
+package com.app.lps.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
-public class HelloWorldResponse {
+@Entity
+@Table(name = "hello_world")
+public class HelloWorld {
 
-    @JsonProperty("id")
+    @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @JsonProperty("content")
+    @Column(name = "content", nullable = false)
     String content;
 
-    public HelloWorldResponse(Long id, String content) {
+    public HelloWorld() {
+
+    }
+
+    public HelloWorld(Long id, String content) {
         this.id = id;
         this.content = content;
     }
