@@ -1,5 +1,6 @@
 package com.app.lps.models;
 
+import com.app.lps.models.enums.TaskStatus;
 import jakarta.persistence.*;
 import java.time.*;
 
@@ -10,10 +11,10 @@ public class Task {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(name = "goal_id", nullable = false)
-    private Integer goalId;
+    private Long goalId;
 
     @Column(name = "task_number", nullable = false)
     private Integer number;
@@ -24,14 +25,18 @@ public class Task {
     @Column(name = "task_description", nullable = false)
     private String description;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "task_status", nullable = false)
+    private TaskStatus status = TaskStatus.PLANNED;
 
-    @Column(name = "due_date", nullable = false)
-    private LocalDate dueDate;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "due_date")
+    private LocalDateTime dueDate;
 
     @Column(name = "completed_date")
-    private LocalDate completedDate;
+    private LocalDateTime completedDate;
 
     @Column(name = "difficulty")
     private String difficulty;
@@ -39,34 +44,36 @@ public class Task {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    public Task(){}
+    public Task() {
+    }
 
-    public Task(Integer id, Integer goalId, Integer number, String title, String description, String status, LocalDate dueDate, LocalDate completedDate, String difficulty, LocalDateTime createdAt) {
+    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status,LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, String difficulty, LocalDateTime createdAt) {
         this.id = id;
         this.goalId = goalId;
         this.number = number;
         this.title = title;
         this.description = description;
         this.status = status;
+        this.startDate = startDate;
         this.dueDate = dueDate;
         this.completedDate = completedDate;
         this.difficulty = difficulty;
         this.createdAt = createdAt;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getGoalId() {
+    public Long getGoalId() {
         return goalId;
     }
 
-    public void setGoalId(Integer goalId) {
+    public void setGoalId(Long goalId) {
         this.goalId = goalId;
     }
 
@@ -94,27 +101,35 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
-    public LocalDate getDueDate() {
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDateTime getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
     }
 
-    public LocalDate getCompletedDate() {
+    public LocalDateTime getCompletedDate() {
         return completedDate;
     }
 
-    public void setCompletedDate(LocalDate completedDate) {
+    public void setCompletedDate(LocalDateTime completedDate) {
         this.completedDate = completedDate;
     }
 
