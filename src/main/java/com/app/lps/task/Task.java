@@ -1,6 +1,6 @@
-package com.app.lps.models;
+package com.app.lps.task;
 
-import com.app.lps.models.enums.TaskStatus;
+import com.app.lps.enums.TaskStatus;
 import jakarta.persistence.*;
 import java.time.*;
 

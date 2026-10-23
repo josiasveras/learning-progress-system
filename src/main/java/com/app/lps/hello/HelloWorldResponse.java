@@ -1,4 +1,4 @@
-package com.app.lps.records;
+package com.app.lps.hello;
 
 public record HelloWorldResponse(String content) {
 }

@@ -1,4 +1,4 @@
-package com.app.lps.models.enums;
+package com.app.lps.enums;
 
 public enum Comprehension {
     VERY_LOW,

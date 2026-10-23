@@ -1,8 +1,5 @@
-package com.app.lps.services;
+package com.app.lps.hello;
 
-import com.app.lps.models.HelloWorld;
-import com.app.lps.records.HelloWorldResponse;
-import com.app.lps.repositories.HelloWorldRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

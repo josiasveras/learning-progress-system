@@ -1,6 +1,6 @@
-package com.app.lps.records;
+package com.app.lps.task;
 
-import com.app.lps.models.enums.TaskStatus;
+import com.app.lps.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 

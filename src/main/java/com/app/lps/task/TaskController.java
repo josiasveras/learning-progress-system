@@ -1,7 +1,5 @@
-package com.app.lps.controllers;
+package com.app.lps.task;
 
-import com.app.lps.records.TaskResponse;
-import com.app.lps.services.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

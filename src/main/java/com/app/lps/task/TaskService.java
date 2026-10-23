@@ -1,8 +1,5 @@
-package com.app.lps.services;
+package com.app.lps.task;
 
-import com.app.lps.models.Task;
-import com.app.lps.records.TaskResponse;
-import com.app.lps.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
