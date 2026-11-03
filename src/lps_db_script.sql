@@ -1,3 +1,6 @@
+CREATE DATABASE lps_db;
+USE lps_db;
+
 CREATE TABLE hello_world (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
     content varchar(255) NOT NULL
