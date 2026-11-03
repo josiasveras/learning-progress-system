@@ -1,8 +1,9 @@
 package com.app.lps.task;
 
+import com.app.lps.enums.Difficulty;
 import com.app.lps.enums.TaskStatus;
 import jakarta.persistence.*;
-import java.time.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tasks")
@@ -38,8 +39,9 @@ public class Task {
     @Column(name = "completed_date")
     private LocalDateTime completedDate;
 
-    @Column(name = "difficulty")
-    private String difficulty;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "difficulty", nullable = false)
+    private Difficulty difficulty = Difficulty.MODERATE;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -47,7 +49,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status,LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, String difficulty, LocalDateTime createdAt) {
+    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt) {
         this.id = id;
         this.goalId = goalId;
         this.number = number;
@@ -133,11 +135,11 @@ public class Task {
         this.completedDate = completedDate;
     }
 
-    public String getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
