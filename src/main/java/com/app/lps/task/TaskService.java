@@ -17,11 +17,11 @@ public class TaskService {
 
     public Stream<TaskResponse> getTasks() {
         List<Task> task = taskRepository.findAll();
-        return task.stream().map(t -> new TaskResponse(t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt()));
+        return task.stream().map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt()));
     }
 
     public TaskResponse getTaskById(Long id) {
         Optional<Task> taskOptional = taskRepository.findById(id);
-        return taskOptional.map(t -> new TaskResponse(t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt())).orElse(null);
+        return taskOptional.map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt())).orElse(null);
     }
 }
