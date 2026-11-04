@@ -6,6 +6,8 @@ import com.app.lps.enums.TaskStatus;
 import java.time.LocalDateTime;
 
 public record TaskResponse(
+        Long id,
+        Long goalId,
         Integer number,
         String title,
         String description,

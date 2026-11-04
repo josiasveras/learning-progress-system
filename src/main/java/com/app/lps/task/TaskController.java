@@ -2,11 +2,10 @@ package com.app.lps.task;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.stream.Stream;
 
 @RestController
@@ -29,5 +28,16 @@ public class TaskController {
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
         TaskResponse taskResponse = taskService.getTaskById(id);
         return ResponseEntity.status(HttpStatus.OK).body(taskResponse);
+    }
+
+    @PostMapping("/v1/tasks")
+    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
+        TaskResponse taskResponse = taskService.createTask(taskRequest);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(taskResponse.id())
+                .toUri();
+        return ResponseEntity.created(uri).body(taskResponse);
     }
 }
