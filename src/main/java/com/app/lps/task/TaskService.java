@@ -24,4 +24,10 @@ public class TaskService {
         Optional<Task> taskOptional = taskRepository.findById(id);
         return taskOptional.map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt())).orElse(null);
     }
+
+    public TaskResponse createTask(TaskRequest taskRequest) {
+        Task task = new Task(taskRequest.goalId(), taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty());
+        taskRepository.save(task);
+        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt());
+    }
 }

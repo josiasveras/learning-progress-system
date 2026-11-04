@@ -3,6 +3,7 @@ package com.app.lps.task;
 import com.app.lps.enums.Difficulty;
 import com.app.lps.enums.TaskStatus;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -44,7 +45,7 @@ public class Task {
     private Difficulty difficulty = Difficulty.MODERATE;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Task() {
     }
@@ -61,6 +62,18 @@ public class Task {
         this.completedDate = completedDate;
         this.difficulty = difficulty;
         this.createdAt = createdAt;
+    }
+
+    public Task(Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty) {
+        this.goalId = goalId;
+        this.number = number;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.startDate = startDate;
+        this.dueDate = dueDate;
+        this.completedDate = completedDate;
+        this.difficulty = difficulty;
     }
 
     public Long getId() {
