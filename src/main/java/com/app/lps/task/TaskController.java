@@ -40,4 +40,10 @@ public class TaskController {
                 .toUri();
         return ResponseEntity.created(uri).body(taskResponse);
     }
+
+    @DeleteMapping("/v1/tasks/{id}")
+    public ResponseEntity<Void> deleteTaskById(@PathVariable Long id) {
+        taskService.deleteTaskById(id);
+        return ResponseEntity.noContent().build();
+    }
 }
