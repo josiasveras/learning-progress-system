@@ -57,6 +57,8 @@ public class TaskService {
         task.setCompletedDate(taskRequest.completedDate());
         task.setDifficulty(taskRequest.difficulty());
 
-        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt());
+        Task updatedTask = taskRepository.save(task);
+
+        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt());
     }
 }
