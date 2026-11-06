@@ -2,6 +2,7 @@ package com.app.lps.task;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -39,5 +40,23 @@ public class TaskService {
         }
 
         taskRepository.deleteById(id);
+    }
+
+    @Transactional
+    public TaskResponse updateTaskById(Long id, TaskRequest taskRequest) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found."));
+
+        task.setGoalId(taskRequest.goalId());
+        task.setNumber(taskRequest.number());
+        task.setTitle(taskRequest.title());
+        task.setDescription(taskRequest.description());
+        task.setStatus(taskRequest.status());
+        task.setStartDate(taskRequest.startDate());
+        task.setDueDate(taskRequest.dueDate());
+        task.setCompletedDate(taskRequest.completedDate());
+        task.setDifficulty(taskRequest.difficulty());
+
+        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt());
     }
 }
