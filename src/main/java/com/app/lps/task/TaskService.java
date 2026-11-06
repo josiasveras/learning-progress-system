@@ -1,6 +1,8 @@
 package com.app.lps.task;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,5 +31,13 @@ public class TaskService {
         Task task = new Task(taskRequest.goalId(), taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty());
         taskRepository.save(task);
         return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt());
+    }
+
+    public void deleteTaskById(Long id) {
+        if (!taskRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found.");
+        }
+
+        taskRepository.deleteById(id);
     }
 }
