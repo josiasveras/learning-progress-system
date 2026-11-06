@@ -52,4 +52,10 @@ public class TaskController {
         TaskResponse taskResponse = taskService.updateTaskById(id, taskRequest);
         return ResponseEntity.ok(taskResponse);
     }
+
+    @PatchMapping("/v1/tasks/{id}")
+    public ResponseEntity<TaskResponse> updateTaskPartiallyById(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
+        TaskResponse taskResponse = taskService.updateTaskPartiallyById(id, taskRequest);
+        return ResponseEntity.ok(taskResponse);
+    }
 }

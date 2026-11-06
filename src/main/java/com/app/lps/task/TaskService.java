@@ -61,4 +61,42 @@ public class TaskService {
 
         return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt());
     }
+
+    @Transactional
+    public TaskResponse updateTaskPartiallyById(Long id, TaskRequest taskRequest) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found."));
+
+        if (taskRequest.goalId() != null) {
+            task.setGoalId(taskRequest.goalId());
+        }
+        if (taskRequest.number() != null) {
+            task.setNumber(taskRequest.number());
+        }
+        if (taskRequest.title() != null) {
+            task.setTitle(taskRequest.title());
+        }
+        if (taskRequest.description() != null) {
+            task.setDescription(taskRequest.description());
+        }
+        if (taskRequest.status() != null) {
+            task.setStatus(taskRequest.status());
+        }
+        if (taskRequest.startDate() != null) {
+            task.setStartDate(taskRequest.startDate());
+        }
+        if (taskRequest.dueDate() != null) {
+            task.setDueDate(taskRequest.dueDate());
+        }
+        if (taskRequest.completedDate() != null) {
+            task.setCompletedDate(taskRequest.completedDate());
+        }
+        if (taskRequest.difficulty() != null) {
+            task.setDifficulty(taskRequest.difficulty());
+        }
+
+        Task updatedTask = taskRepository.save(task);
+
+        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt());
+    }
 }
