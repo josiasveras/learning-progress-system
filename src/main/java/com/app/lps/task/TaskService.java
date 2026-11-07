@@ -20,18 +20,18 @@ public class TaskService {
 
     public Stream<TaskResponse> getTasks() {
         List<Task> task = taskRepository.findAll();
-        return task.stream().map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt()));
+        return task.stream().map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt(), t.getContentLink(), t.getNote()));
     }
 
     public TaskResponse getTaskById(Long id) {
         Optional<Task> taskOptional = taskRepository.findById(id);
-        return taskOptional.map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt())).orElse(null);
+        return taskOptional.map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt(), t.getContentLink(), t.getNote())).orElse(null);
     }
 
     public TaskResponse createTask(TaskRequest taskRequest) {
-        Task task = new Task(taskRequest.goalId(), taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty());
+        Task task = new Task(taskRequest.goalId(), taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty(), taskRequest.contentLink(), taskRequest.note());
         taskRepository.save(task);
-        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt());
+        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt(), task.getContentLink(), task.getNote());
     }
 
     public void deleteTaskById(Long id) {
@@ -56,10 +56,12 @@ public class TaskService {
         task.setDueDate(taskRequest.dueDate());
         task.setCompletedDate(taskRequest.completedDate());
         task.setDifficulty(taskRequest.difficulty());
+        task.setContentLink(taskRequest.contentLink());
+        task.setNote(taskRequest.note());
 
         Task updatedTask = taskRepository.save(task);
 
-        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt());
+        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt(), updatedTask.getContentLink(), updatedTask.getNote());
     }
 
     @Transactional
@@ -94,9 +96,15 @@ public class TaskService {
         if (taskRequest.difficulty() != null) {
             task.setDifficulty(taskRequest.difficulty());
         }
+        if (taskRequest.contentLink() != null) {
+            task.setContentLink(taskRequest.contentLink());
+        }
+        if (taskRequest.note() != null) {
+            task.setNote(taskRequest.note());
+        }
 
         Task updatedTask = taskRepository.save(task);
 
-        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt());
+        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt(), updatedTask.getContentLink(), updatedTask.getNote());
     }
 }
