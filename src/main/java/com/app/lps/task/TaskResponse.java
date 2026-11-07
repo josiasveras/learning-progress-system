@@ -16,5 +16,7 @@ public record TaskResponse(
         LocalDateTime dueDate,
         LocalDateTime completedDate,
         Difficulty difficulty,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        String contentLink,
+        String note
 ) {}

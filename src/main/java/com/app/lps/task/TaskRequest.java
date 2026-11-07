@@ -14,5 +14,7 @@ public record TaskRequest(
         LocalDateTime startDate,
         LocalDateTime dueDate,
         LocalDateTime completedDate,
-        Difficulty difficulty
+        Difficulty difficulty,
+        String contentLink,
+        String note
 ) { }

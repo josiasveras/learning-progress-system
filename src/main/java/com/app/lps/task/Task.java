@@ -47,10 +47,16 @@ public class Task {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column(name = "content_link")
+    private String contentLink;
+
+    @Column(name = "note")
+    private String note;
+
     public Task() {
     }
 
-    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt) {
+    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
         this.id = id;
         this.goalId = goalId;
         this.number = number;
@@ -62,9 +68,11 @@ public class Task {
         this.completedDate = completedDate;
         this.difficulty = difficulty;
         this.createdAt = createdAt;
+        this.contentLink = contentLink;
+        this.note = note;
     }
 
-    public Task(Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty) {
+    public Task(Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
         this.goalId = goalId;
         this.number = number;
         this.title = title;
@@ -74,6 +82,8 @@ public class Task {
         this.dueDate = dueDate;
         this.completedDate = completedDate;
         this.difficulty = difficulty;
+        this.contentLink = contentLink;
+        this.note = note;
     }
 
     public Long getId() {
@@ -162,5 +172,21 @@ public class Task {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getContentLink() {
+        return contentLink;
+    }
+
+    public void setContentLink(String contentLink) {
+        this.contentLink = contentLink;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
