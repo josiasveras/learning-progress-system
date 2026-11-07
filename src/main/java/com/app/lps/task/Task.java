@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "task_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -31,26 +31,26 @@ public class Task {
     @Column(name = "task_status", nullable = false)
     private TaskStatus status = TaskStatus.PLANNED;
 
-    @Column(name = "start_date")
+    @Column(name = "task_start_date")
     private LocalDateTime startDate;
 
-    @Column(name = "due_date")
+    @Column(name = "task_due_date")
     private LocalDateTime dueDate;
 
-    @Column(name = "completed_date")
+    @Column(name = "task_completed_date")
     private LocalDateTime completedDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "difficulty", nullable = false)
+    @Column(name = "task_difficulty", nullable = false)
     private Difficulty difficulty = Difficulty.MODERATE;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "task_created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "content_link")
+    @Column(name = "task_content_link")
     private String contentLink;
 
-    @Column(name = "note")
+    @Column(name = "task_note")
     private String note;
 
     public Task() {
