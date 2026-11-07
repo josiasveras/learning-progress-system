@@ -17,5 +17,7 @@ CREATE TABLE tasks (
     due_date DATETIME,
     completed_date DATETIME,
     difficulty VARCHAR(255) NOT NULL DEFAULT 'MODERATE',
-    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    content_link VARCHAR(2048),
+	note TEXT
 );
