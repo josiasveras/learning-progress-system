@@ -11,12 +11,12 @@ CREATE TABLE hello_world (
 CREATE TABLE goals (
 	goal_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     goal_name VARCHAR(255) NOT NULL,
-    goal_description TEXT,
-    goal_start_date DATE,
-    goal_target_date DATE,
+    goal_description TEXT NULL,
+    goal_start_date DATE NULL,
+    goal_target_date DATE NULL,
     start_task_id BIGINT NULL,  -- Optional during creation to prevent logical deadlocks
     target_task_id BIGINT NULL, -- Optional during creation to prevent logical deadlocks
-    goal_status VARCHAR(50),
+    goal_status VARCHAR(50) NOT NULL DEFAULT 'PLANNED',
     goal_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -26,15 +26,15 @@ CREATE TABLE tasks (
     goal_id BIGINT NOT NULL,
     task_number INT NOT NULL,
     task_title VARCHAR(255) NOT NULL,
-    task_description VARCHAR(255) NOT NULL,
-    task_status VARCHAR(255) NOT NULL DEFAULT 'PLANNED',
-    task_start_date DATETIME,
-    task_due_date DATETIME,
-    task_completed_date DATETIME,
-    task_difficulty VARCHAR(255) NOT NULL DEFAULT 'MODERATE',
+    task_description VARCHAR(255) NULL,
+    task_status VARCHAR(50) NOT NULL DEFAULT 'PLANNED',
+    task_start_date DATETIME NULL,
+    task_due_date DATETIME NULL,
+    task_completed_date DATETIME NULL,
+    task_difficulty VARCHAR(50) NOT NULL DEFAULT 'MODERATE',
     task_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    task_content_link VARCHAR(2048),
-	task_note TEXT,
+    task_content_link VARCHAR(2048) NULL,
+	task_note TEXT NULL,
     
     CONSTRAINT fk_tasks_goal_id  
         FOREIGN KEY (goal_id) 
