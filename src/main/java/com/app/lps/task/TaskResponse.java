@@ -1,7 +1,7 @@
 package com.app.lps.task;
 
 import com.app.lps.enums.Difficulty;
-import com.app.lps.enums.TaskStatus;
+import com.app.lps.enums.Status;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +11,7 @@ public record TaskResponse(
         Integer number,
         String title,
         String description,
-        TaskStatus status,
+        Status status,
         LocalDateTime startDate,
         LocalDateTime dueDate,
         LocalDateTime completedDate,

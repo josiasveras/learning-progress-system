@@ -1,7 +1,7 @@
 package com.app.lps.task;
 
 import com.app.lps.enums.Difficulty;
-import com.app.lps.enums.TaskStatus;
+import com.app.lps.enums.Status;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -24,12 +24,12 @@ public class Task {
     @Column(name = "task_title", nullable = false)
     private String title;
 
-    @Column(name = "task_description", nullable = false)
+    @Column(name = "task_description")
     private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "task_status", nullable = false)
-    private TaskStatus status = TaskStatus.PLANNED;
+    private Status status = Status.PLANNED;
 
     @Column(name = "task_start_date")
     private LocalDateTime startDate;
@@ -56,7 +56,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
+    public Task(Long id, Long goalId, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
         this.id = id;
         this.goalId = goalId;
         this.number = number;
@@ -72,7 +72,7 @@ public class Task {
         this.note = note;
     }
 
-    public Task(Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
+    public Task(Long goalId, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
         this.goalId = goalId;
         this.number = number;
         this.title = title;
@@ -126,11 +126,11 @@ public class Task {
         this.description = description;
     }
 
-    public TaskStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -1,6 +1,6 @@
 package com.app.lps.enums;
 
-public enum TaskStatus {
+public enum Status {
     PLANNED,
     IN_PROGRESS,
     PAUSED,
