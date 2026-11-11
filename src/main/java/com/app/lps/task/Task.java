@@ -2,6 +2,7 @@ package com.app.lps.task;
 
 import com.app.lps.enums.Difficulty;
 import com.app.lps.enums.Status;
+import com.app.lps.goal.Goal;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -15,8 +16,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "goal_id", nullable = false)
-    private Long goalId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "goal_id", nullable = false)
+    private Goal goal;
 
     @Column(name = "task_number", nullable = false)
     private Integer number;
@@ -56,9 +58,9 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, Long goalId, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
+    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
         this.id = id;
-        this.goalId = goalId;
+        this.goal = goal;
         this.number = number;
         this.title = title;
         this.description = description;
@@ -72,8 +74,8 @@ public class Task {
         this.note = note;
     }
 
-    public Task(Long goalId, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
-        this.goalId = goalId;
+    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
+        this.goal = goal;
         this.number = number;
         this.title = title;
         this.description = description;
@@ -94,12 +96,12 @@ public class Task {
         this.id = id;
     }
 
-    public Long getGoalId() {
-        return goalId;
+    public Goal getGoal() {
+        return goal;
     }
 
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
     public Integer getNumber() {

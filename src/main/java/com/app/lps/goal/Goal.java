@@ -1,12 +1,16 @@
 package com.app.lps.goal;
 
 import com.app.lps.enums.Status;
+import com.app.lps.task.Task;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "goals")
 public class Goal {
 
     @Id
@@ -26,11 +30,16 @@ public class Goal {
     @Column(name = "goal_target_date")
     private LocalDate targetDate;
 
-    @Column(name = "start_task_id")
-    private Long startTaskId;
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks = new ArrayList<>();
 
-    @Column(name = "target_task_id")
-    private Long targetTaskId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "start_task_id")
+    private Task startTask;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "target_task_id")
+    private Task targetTask;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "goal_status", nullable = false)
@@ -42,14 +51,14 @@ public class Goal {
     public Goal(){
     }
 
-    public Goal(Long id, String name, String description, LocalDate startDate, LocalDate targetDate, Long startTaskId, Long targetTaskId, Status status, LocalDateTime createdAt) {
+    public Goal(Long id, String name, String description, LocalDate startDate, LocalDate targetDate, Task startTask, Task targetTask, Status status, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.startDate = startDate;
         this.targetDate = targetDate;
-        this.startTaskId = startTaskId;
-        this.targetTaskId = targetTaskId;
+        this.startTask = startTask;
+        this.targetTask = targetTask;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -94,20 +103,20 @@ public class Goal {
         this.targetDate = targetDate;
     }
 
-    public Long getStartTaskId() {
-        return startTaskId;
+    public Task getStartTask() {
+        return startTask;
     }
 
-    public void setStartTaskId(Long startTaskId) {
-        this.startTaskId = startTaskId;
+    public void setStartTask(Task startTask) {
+        this.startTask = startTask;
     }
 
-    public Long getTargetTaskId() {
-        return targetTaskId;
+    public Task getTargetTask() {
+        return targetTask;
     }
 
-    public void setTargetTaskId(Long targetTaskId) {
-        this.targetTaskId = targetTaskId;
+    public void setTargetTask(Task targetTask) {
+        this.targetTask = targetTask;
     }
 
     public Status getStatus() {
