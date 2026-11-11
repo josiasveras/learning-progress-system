@@ -1,37 +1,79 @@
 package com.app.lps.task;
 
+import com.app.lps.goal.Goal;
+import com.app.lps.goal.GoalRepository;
+import com.app.lps.goal.GoalSummaryResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final GoalRepository goalRepository;
 
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, GoalRepository goalRepository) {
         this.taskRepository = taskRepository;
+        this.goalRepository = goalRepository;
+    }
+
+    public GoalSummaryResponse toGoalSummaryResponse(final Goal goalEntity) {
+        return new GoalSummaryResponse(
+                goalEntity.getId(),
+                goalEntity.getName(),
+                goalEntity.getDescription(),
+                goalEntity.getStartDate(),
+                goalEntity.getTargetDate(),
+                goalEntity.getStatus()
+        );
+    }
+
+    private TaskResponse toTaskResponse(Task task) {
+        GoalSummaryResponse goalSummary = toGoalSummaryResponse(task.getGoal());
+
+        return new TaskResponse(
+                task.getId(),
+                goalSummary,
+                task.getNumber(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus(),
+                task.getStartDate(),
+                task.getDueDate(),
+                task.getCompletedDate(),
+                task.getDifficulty(),
+                task.getCreatedAt(),
+                task.getContentLink(),
+                task.getNote()
+        );
     }
 
     public Stream<TaskResponse> getTasks() {
-        List<Task> task = taskRepository.findAll();
-        return task.stream().map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt(), t.getContentLink(), t.getNote()));
+        List<Task> tasks = taskRepository.findAll();
+        return tasks.stream().map(this::toTaskResponse);
     }
 
     public TaskResponse getTaskById(Long id) {
-        Optional<Task> taskOptional = taskRepository.findById(id);
-        return taskOptional.map(t -> new TaskResponse(t.getId(), t.getGoalId(), t.getNumber(), t.getTitle(), t.getDescription(), t.getStatus(), t.getStartDate(), t.getDueDate(), t.getCompletedDate(), t.getDifficulty(), t.getCreatedAt(), t.getContentLink(), t.getNote())).orElse(null);
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found."));
+
+        return toTaskResponse(task);
     }
 
     public TaskResponse createTask(TaskRequest taskRequest) {
-        Task task = new Task(taskRequest.goalId(), taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty(), taskRequest.contentLink(), taskRequest.note());
-        taskRepository.save(task);
-        return new TaskResponse(task.getId(), task.getGoalId(), task.getNumber(), task.getTitle(), task.getDescription(), task.getStatus(), task.getStartDate(), task.getDueDate(), task.getCompletedDate(), task.getDifficulty(), task.getCreatedAt(), task.getContentLink(), task.getNote());
+        Goal goal = goalRepository.findById(taskRequest.goalId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + taskRequest.goalId() + " not found."));
+
+        Task task = new Task(goal, taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty(), taskRequest.contentLink(), taskRequest.note());
+
+        Task savedTask = taskRepository.save(task);
+
+        return toTaskResponse(savedTask);
     }
 
     public void deleteTaskById(Long id) {
@@ -47,7 +89,10 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found."));
 
-        task.setGoalId(taskRequest.goalId());
+        Goal goal = goalRepository.findById(taskRequest.goalId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + taskRequest.goalId() + " not found."));
+
+        task.setGoal(goal);
         task.setNumber(taskRequest.number());
         task.setTitle(taskRequest.title());
         task.setDescription(taskRequest.description());
@@ -61,7 +106,7 @@ public class TaskService {
 
         Task updatedTask = taskRepository.save(task);
 
-        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt(), updatedTask.getContentLink(), updatedTask.getNote());
+        return toTaskResponse(updatedTask);
     }
 
     @Transactional
@@ -70,7 +115,9 @@ public class TaskService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + id + " not found."));
 
         if (taskRequest.goalId() != null) {
-            task.setGoalId(taskRequest.goalId());
+            Goal goal = goalRepository.findById(taskRequest.goalId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + taskRequest.goalId() + " not found."));
+            task.setGoal(goal);
         }
         if (taskRequest.number() != null) {
             task.setNumber(taskRequest.number());
@@ -105,6 +152,6 @@ public class TaskService {
 
         Task updatedTask = taskRepository.save(task);
 
-        return new TaskResponse(updatedTask.getId(), updatedTask.getGoalId(), updatedTask.getNumber(), updatedTask.getTitle(), updatedTask.getDescription(), updatedTask.getStatus(), updatedTask.getStartDate(), updatedTask.getDueDate(), updatedTask.getCompletedDate(), updatedTask.getDifficulty(), updatedTask.getCreatedAt(), updatedTask.getContentLink(), updatedTask.getNote());
+        return toTaskResponse(updatedTask);
     }
 }
