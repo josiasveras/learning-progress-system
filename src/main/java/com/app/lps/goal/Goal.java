@@ -51,7 +51,7 @@ public class Goal {
     public Goal(){
     }
 
-    public Goal(Long id, String name, String description, LocalDate startDate, LocalDate targetDate, Task startTask, Task targetTask, Status status, LocalDateTime createdAt) {
+    public Goal(Long id, String name, String description, LocalDate startDate, LocalDate targetDate, List<Task> tasks, Task startTask, Task targetTask, Status status, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -59,6 +59,7 @@ public class Goal {
         this.targetDate = targetDate;
         this.startTask = startTask;
         this.targetTask = targetTask;
+        this.tasks = tasks;
         this.status = status;
         this.createdAt = createdAt;
     }
@@ -77,6 +78,14 @@ public class Goal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public String getDescription() {
