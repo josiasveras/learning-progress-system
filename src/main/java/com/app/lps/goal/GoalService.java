@@ -1,7 +1,9 @@
 package com.app.lps.goal;
 
 import com.app.lps.task.Task;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -53,5 +55,11 @@ public class GoalService {
         return goals.stream()
                 .map(this::toGoalResponse)
                 .toList();
+    }
+
+    public GoalResponse getGoalById(Long id) {
+        Goal goal = goalRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + id + " not found."));
+        return toGoalResponse(goal);
     }
 }
