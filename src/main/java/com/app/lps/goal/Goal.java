@@ -64,6 +64,16 @@ public class Goal {
         this.createdAt = createdAt;
     }
 
+    public Goal(String name, String description, LocalDate startDate, LocalDate targetDate, Task startTask, Task targetTask, Status status) {
+        this.name = name;
+        this.description = description;
+        this.startDate = startDate;
+        this.targetDate = targetDate;
+        this.startTask = startTask;
+        this.targetTask = targetTask;
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

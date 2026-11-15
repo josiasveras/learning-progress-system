@@ -2,11 +2,10 @@ package com.app.lps.goal;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,6 +28,17 @@ public class GoalController {
     public ResponseEntity<GoalResponse> getGoalById(@PathVariable Long id) {
         GoalResponse goalResponse = goalService.getGoalById(id);
         return ResponseEntity.status(HttpStatus.OK).body(goalResponse);
+    }
+
+    @PostMapping("/v1/goals")
+    public ResponseEntity<GoalResponse> createGoal(@RequestBody GoalRequest goalRequest) {
+        GoalResponse goalResponse = goalService.createGoal(goalRequest);
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(goalResponse.id())
+                .toUri();
+        return ResponseEntity.created(uri).body(goalResponse);
     }
 
 }

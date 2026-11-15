@@ -52,6 +52,7 @@ public class GoalService {
 
     public List<GoalResponse> getGoals() {
         List<Goal> goals = goalRepository.findAll();
+
         return goals.stream()
                 .map(this::toGoalResponse)
                 .toList();
@@ -60,6 +61,15 @@ public class GoalService {
     public GoalResponse getGoalById(Long id) {
         Goal goal = goalRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + id + " not found."));
+
         return toGoalResponse(goal);
+    }
+
+    public GoalResponse createGoal(GoalRequest goalRequest) {
+        Goal goal = new Goal(goalRequest.name(), goalRequest.description(), goalRequest.startDate(), goalRequest.targetDate(), null, null, goalRequest.status());
+
+        Goal savedGoal = goalRepository.save(goal);
+
+        return toGoalResponse(savedGoal);
     }
 }
