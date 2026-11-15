@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 public class TaskService {
@@ -53,9 +52,12 @@ public class TaskService {
         );
     }
 
-    public Stream<TaskResponse> getTasks() {
+    public List<TaskResponse> getTasks() {
         List<Task> tasks = taskRepository.findAll();
-        return tasks.stream().map(this::toTaskResponse);
+
+        return tasks.stream()
+                .map(this::toTaskResponse)
+                .toList();
     }
 
     public TaskResponse getTaskById(Long id) {
