@@ -35,6 +35,7 @@ CREATE TABLE tasks (
     task_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     task_content_link VARCHAR(2048) NULL,
 	task_note TEXT NULL,
+    task_category VARCHAR(255) NULL,
     
     CONSTRAINT fk_tasks_goal_id  
         FOREIGN KEY (goal_id) 

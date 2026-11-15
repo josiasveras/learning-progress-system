@@ -19,5 +19,6 @@ public record TaskResponse(
         Difficulty difficulty,
         LocalDateTime createdAt,
         String contentLink,
-        String note
+        String note,
+        String category
 ) {}

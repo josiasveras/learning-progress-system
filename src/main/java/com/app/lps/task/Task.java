@@ -55,10 +55,13 @@ public class Task {
     @Column(name = "task_note")
     private String note;
 
+    @Column(name = "task_category")
+    private String category;
+
     public Task() {
     }
 
-    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
+    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note, String category) {
         this.id = id;
         this.goal = goal;
         this.number = number;
@@ -72,9 +75,10 @@ public class Task {
         this.createdAt = createdAt;
         this.contentLink = contentLink;
         this.note = note;
+        this.category = category;
     }
 
-    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
+    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note, String category) {
         this.goal = goal;
         this.number = number;
         this.title = title;
@@ -86,6 +90,7 @@ public class Task {
         this.difficulty = difficulty;
         this.contentLink = contentLink;
         this.note = note;
+        this.category = category;
     }
 
     public Long getId() {
@@ -190,5 +195,13 @@ public class Task {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

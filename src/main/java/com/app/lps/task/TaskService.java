@@ -48,7 +48,8 @@ public class TaskService {
                 task.getDifficulty(),
                 task.getCreatedAt(),
                 task.getContentLink(),
-                task.getNote()
+                task.getNote(),
+                task.getCategory()
         );
     }
 
@@ -71,7 +72,7 @@ public class TaskService {
         Goal goal = goalRepository.findById(taskRequest.goalId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + taskRequest.goalId() + " not found."));
 
-        Task task = new Task(goal, taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty(), taskRequest.contentLink(), taskRequest.note());
+        Task task = new Task(goal, taskRequest.number(), taskRequest.title(), taskRequest.description(), taskRequest.status(), taskRequest.startDate(), taskRequest.dueDate(), taskRequest.completedDate(), taskRequest.difficulty(), taskRequest.contentLink(), taskRequest.note(), taskRequest.category());
 
         Task savedTask = taskRepository.save(task);
 
@@ -105,6 +106,7 @@ public class TaskService {
         task.setDifficulty(taskRequest.difficulty());
         task.setContentLink(taskRequest.contentLink());
         task.setNote(taskRequest.note());
+        task.setCategory(taskRequest.category());
 
         Task updatedTask = taskRepository.save(task);
 
@@ -150,6 +152,9 @@ public class TaskService {
         }
         if (taskRequest.note() != null) {
             task.setNote(taskRequest.note());
+        }
+        if (taskRequest.category() != null) {
+            task.setCategory(taskRequest.category());
         }
 
         Task updatedTask = taskRepository.save(task);
