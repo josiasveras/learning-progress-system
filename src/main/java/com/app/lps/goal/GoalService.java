@@ -1,8 +1,10 @@
 package com.app.lps.goal;
 
 import com.app.lps.task.Task;
+import com.app.lps.task.TaskRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.List;
 public class GoalService {
 
     private final GoalRepository goalRepository;
+    private final TaskRepository taskRepository;
 
-    public GoalService(GoalRepository goalRepository) {
+    public GoalService(GoalRepository goalRepository, TaskRepository taskRepository) {
         this.goalRepository = goalRepository;
+        this.taskRepository = taskRepository;
     }
 
     private TaskSummaryResponse toTaskSummaryResponse(Task task) {
@@ -71,5 +75,31 @@ public class GoalService {
         Goal savedGoal = goalRepository.save(goal);
 
         return toGoalResponse(savedGoal);
+    }
+
+    @Transactional
+    public GoalResponse updateGoalById(Long id, GoalRequest goalRequest) {
+        Goal goal = goalRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + id + " not found."));
+
+        goal.setName(goalRequest.name());
+        goal.setDescription(goalRequest.description());
+        goal.setStartDate(goalRequest.startDate());
+        goal.setTargetDate(goalRequest.targetDate());
+        if (goalRequest.startTaskId() != null) {
+            Task startTask = taskRepository.findById(goalRequest.startTaskId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + goalRequest.startTaskId() + " not found."));
+            goal.setStartTask(startTask);
+        }
+        if (goalRequest.targetTaskId() != null) {
+            Task targetTask = taskRepository.findById(goalRequest.targetTaskId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + goalRequest.targetTaskId() + " not found."));
+            goal.setTargetTask(targetTask);
+        }
+        goal.setStatus(goalRequest.status());
+
+        Goal updatedGoal = goalRepository.save(goal);
+
+        return toGoalResponse(updatedGoal);
     }
 }

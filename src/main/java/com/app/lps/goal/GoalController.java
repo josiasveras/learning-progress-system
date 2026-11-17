@@ -41,4 +41,9 @@ public class GoalController {
         return ResponseEntity.created(uri).body(goalResponse);
     }
 
+    @PutMapping("/v1/goals/{id}")
+    public ResponseEntity<GoalResponse> updateGoalById(@PathVariable Long id, @RequestBody GoalRequest goalRequest) {
+        GoalResponse goalResponse = goalService.updateGoalById(id, goalRequest);
+        return ResponseEntity.ok(goalResponse);
+    }
 }
