@@ -138,4 +138,12 @@ public class GoalService {
 
         return toGoalResponse(updatedGoal);
     }
+
+    public void deleteGoalById(Long id) {
+        if (!goalRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + id + " not found.");
+        }
+
+        goalRepository.deleteById(id);
+    }
 }
