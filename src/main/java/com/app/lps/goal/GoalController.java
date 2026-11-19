@@ -46,4 +46,11 @@ public class GoalController {
         GoalResponse goalResponse = goalService.updateGoalById(id, goalRequest);
         return ResponseEntity.ok(goalResponse);
     }
+
+    @PatchMapping("/v1/goals/{id}")
+    public ResponseEntity<GoalResponse> updateGoalPartiallyById(@PathVariable Long id, @RequestBody GoalRequest goalRequest) {
+        GoalResponse goalResponse = goalService.updateGoalPartiallyById(id, goalRequest);
+        return ResponseEntity.ok(goalResponse);
+
+    }
 }

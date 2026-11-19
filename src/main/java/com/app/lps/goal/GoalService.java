@@ -102,4 +102,40 @@ public class GoalService {
 
         return toGoalResponse(updatedGoal);
     }
+
+    @Transactional
+    public GoalResponse updateGoalPartiallyById(Long id, GoalRequest goalRequest) {
+        Goal goal = goalRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Goal with ID " + id + " not found."));
+
+        if (goalRequest.name() != null) {
+            goal.setName(goalRequest.name());
+        }
+        if (goalRequest.description() != null) {
+            goal.setDescription(goalRequest.description());
+        }
+        if (goalRequest.startDate() != null) {
+            goal.setStartDate(goalRequest.startDate());
+        }
+        if (goalRequest.targetDate() != null) {
+            goal.setTargetDate(goalRequest.targetDate());
+        }
+        if (goalRequest.startTaskId() != null) {
+            Task startTask = taskRepository.findById(goalRequest.startTaskId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + goalRequest.startTaskId() + " not found."));
+            goal.setStartTask(startTask);
+        }
+        if (goalRequest.targetTaskId() != null) {
+            Task targetTask = taskRepository.findById(goalRequest.targetTaskId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with ID " + goalRequest.targetTaskId() + " not found."));
+            goal.setTargetTask(targetTask);
+        }
+        if (goalRequest.status() != null) {
+            goal.setStatus(goalRequest.status());
+        }
+
+        Goal updatedGoal = goalRepository.save(goal);
+
+        return toGoalResponse(updatedGoal);
+    }
 }
