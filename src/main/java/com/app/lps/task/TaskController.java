@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.stream.Stream;
+import java.util.List;
 
 @RestController
 @RequestMapping("/lps/api")
@@ -19,8 +19,8 @@ public class TaskController {
     }
 
     @GetMapping("/v1/tasks")
-    public ResponseEntity<Stream<TaskResponse>> getTasks() {
-        Stream<TaskResponse> taskResponse = taskService.getTasks();
+    public ResponseEntity<List<TaskResponse>> getTasks() {
+        List<TaskResponse> taskResponse = taskService.getTasks();
         return ResponseEntity.status(HttpStatus.OK).body(taskResponse);
     }
 

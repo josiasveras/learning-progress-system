@@ -1,7 +1,8 @@
 package com.app.lps.task;
 
 import com.app.lps.enums.Difficulty;
-import com.app.lps.enums.TaskStatus;
+import com.app.lps.enums.Status;
+import com.app.lps.goal.Goal;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -11,12 +12,13 @@ import java.time.LocalDateTime;
 public class Task {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "task_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "goal_id", nullable = false)
-    private Long goalId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "goal_id", nullable = false)
+    private Goal goal;
 
     @Column(name = "task_number", nullable = false)
     private Integer number;
@@ -24,41 +26,47 @@ public class Task {
     @Column(name = "task_title", nullable = false)
     private String title;
 
-    @Column(name = "task_description", nullable = false)
+    @Column(name = "task_description")
     private String description;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "task_status", nullable = false)
-    private TaskStatus status = TaskStatus.PLANNED;
+    private Status status = Status.PLANNED;
 
-    @Column(name = "start_date")
+    @Column(name = "task_start_date")
     private LocalDateTime startDate;
 
-    @Column(name = "due_date")
+    @Column(name = "task_due_date")
     private LocalDateTime dueDate;
 
-    @Column(name = "completed_date")
+    @Column(name = "task_completed_date")
     private LocalDateTime completedDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "difficulty", nullable = false)
+    @Column(name = "task_difficulty", nullable = false)
     private Difficulty difficulty = Difficulty.MODERATE;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "task_created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "content_link")
+    @Column(name = "task_content_link")
     private String contentLink;
 
-    @Column(name = "note")
+    @Column(name = "task_note")
     private String note;
+
+    @Column(name = "task_category")
+    private String category;
+
+    @Column(name = "task_module")
+    private Integer module;
 
     public Task() {
     }
 
-    public Task(Long id, Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note) {
+    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note, String category, Integer module) {
         this.id = id;
-        this.goalId = goalId;
+        this.goal = goal;
         this.number = number;
         this.title = title;
         this.description = description;
@@ -70,10 +78,12 @@ public class Task {
         this.createdAt = createdAt;
         this.contentLink = contentLink;
         this.note = note;
+        this.category = category;
+        this.module = module;
     }
 
-    public Task(Long goalId, Integer number, String title, String description, TaskStatus status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note) {
-        this.goalId = goalId;
+    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note, String category, Integer module) {
+        this.goal = goal;
         this.number = number;
         this.title = title;
         this.description = description;
@@ -84,6 +94,8 @@ public class Task {
         this.difficulty = difficulty;
         this.contentLink = contentLink;
         this.note = note;
+        this.category = category;
+        this.module = module;
     }
 
     public Long getId() {
@@ -94,12 +106,12 @@ public class Task {
         this.id = id;
     }
 
-    public Long getGoalId() {
-        return goalId;
+    public Goal getGoal() {
+        return goal;
     }
 
-    public void setGoalId(Long goalId) {
-        this.goalId = goalId;
+    public void setGoal(Goal goal) {
+        this.goal = goal;
     }
 
     public Integer getNumber() {
@@ -126,11 +138,11 @@ public class Task {
         this.description = description;
     }
 
-    public TaskStatus getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -188,5 +200,21 @@ public class Task {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public Integer getModule() {
+        return module;
+    }
+
+    public void setModule(Integer module) {
+        this.module = module;
     }
 }
