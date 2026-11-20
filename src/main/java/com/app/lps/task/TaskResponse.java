@@ -20,5 +20,6 @@ public record TaskResponse(
         LocalDateTime createdAt,
         String contentLink,
         String note,
-        String category
+        String category,
+        Integer module
 ) {}

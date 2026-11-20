@@ -17,5 +17,6 @@ public record TaskRequest(
         Difficulty difficulty,
         String contentLink,
         String note,
-        String category
+        String category,
+        Integer module
 ) { }

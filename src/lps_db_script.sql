@@ -26,7 +26,7 @@ CREATE TABLE tasks (
     goal_id BIGINT NOT NULL,
     task_number INT NOT NULL,
     task_title VARCHAR(255) NOT NULL,
-    task_description VARCHAR(255) NULL,
+    task_description TEXT NULL,
     task_status VARCHAR(50) NOT NULL DEFAULT 'PLANNED',
     task_start_date DATETIME NULL,
     task_due_date DATETIME NULL,
@@ -36,6 +36,7 @@ CREATE TABLE tasks (
     task_content_link VARCHAR(2048) NULL,
 	task_note TEXT NULL,
     task_category VARCHAR(255) NULL,
+    task_module INT NULL,
     
     CONSTRAINT fk_tasks_goal_id  
         FOREIGN KEY (goal_id) 

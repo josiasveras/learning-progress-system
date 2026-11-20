@@ -58,10 +58,13 @@ public class Task {
     @Column(name = "task_category")
     private String category;
 
+    @Column(name = "task_module")
+    private Integer module;
+
     public Task() {
     }
 
-    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note, String category) {
+    public Task(Long id, Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, LocalDateTime createdAt, String contentLink, String note, String category, Integer module) {
         this.id = id;
         this.goal = goal;
         this.number = number;
@@ -76,9 +79,10 @@ public class Task {
         this.contentLink = contentLink;
         this.note = note;
         this.category = category;
+        this.module = module;
     }
 
-    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note, String category) {
+    public Task(Goal goal, Integer number, String title, String description, Status status, LocalDateTime startDate, LocalDateTime dueDate, LocalDateTime completedDate, Difficulty difficulty, String contentLink, String note, String category, Integer module) {
         this.goal = goal;
         this.number = number;
         this.title = title;
@@ -91,6 +95,7 @@ public class Task {
         this.contentLink = contentLink;
         this.note = note;
         this.category = category;
+        this.module = module;
     }
 
     public Long getId() {
@@ -203,5 +208,13 @@ public class Task {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public Integer getModule() {
+        return module;
+    }
+
+    public void setModule(Integer module) {
+        this.module = module;
     }
 }
