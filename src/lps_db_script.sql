@@ -56,5 +56,21 @@ ALTER TABLE goals
     FOREIGN KEY (target_task_id) 
     REFERENCES tasks(task_id) 
     ON DELETE SET NULL;
+    
+-- 4. Create the “study_sessions” table
+CREATE TABLE study_sessions (
+	study_session_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    task_id BIGINT NOT NULL,
+    study_session_date DATE NULL,
+    study_session_duration_minutes INT NOT NULL,
+    study_session_comprehension VARCHAR(50) NOT NULL DEFAULT 'AVERAGE',
+    study_session_difficulty VARCHAR(50) NOT NULL DEFAULT 'MODERATE',
+    study_session_notes TEXT NULL,
+    
+    CONSTRAINT fk_study_sessions_task_id
+        FOREIGN KEY (task_id) 
+        REFERENCES tasks(task_id) 
+        ON DELETE CASCADE -- If a task is deleted, its study sessions are also deleted (optional)
+);
 
 
