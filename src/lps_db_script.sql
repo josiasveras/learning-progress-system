@@ -65,7 +65,8 @@ CREATE TABLE study_sessions (
     study_session_duration_minutes INT NOT NULL,
     study_session_comprehension VARCHAR(50) NOT NULL DEFAULT 'AVERAGE',
     study_session_difficulty VARCHAR(50) NOT NULL DEFAULT 'MODERATE',
-    study_session_notes TEXT NULL,
+    study_session_note TEXT NULL,
+    study_session_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     
     CONSTRAINT fk_study_sessions_task_id
         FOREIGN KEY (task_id) 
