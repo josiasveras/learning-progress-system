@@ -25,7 +25,7 @@ CREATE TABLE tasks (
 	task_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     goal_id BIGINT NOT NULL,
     task_number INT NOT NULL,
-    task_title VARCHAR(255) NOT NULL,
+    task_title TEXT NOT NULL,
     task_description TEXT NULL,
     task_status VARCHAR(50) NOT NULL DEFAULT 'PLANNED',
     task_start_date DATETIME NULL,
